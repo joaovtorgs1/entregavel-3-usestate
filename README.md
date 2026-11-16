@@ -1,16 +1,23 @@
-# React + Vite
+# Entregável 3 - Interatividade e useState
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App interativa de carrinho de compras feita com React, useState e Tailwind CSS.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Contador simples com useState (Parte 1)
+- Lista de produtos com botão de adicionar e feedback visual (Parte 2)
+- Carrinho com remoção de itens e cálculo do total (Parte 2)
+- Formulário de checkout com validação do nome (Parte 3)
 
-## React Compiler
+## Como rodar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+    npm install
+    npm run dev
 
-## Expanding the ESLint configuration
+## Reflexão
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Por que não devemos mutar o estado diretamente (ex: carrinho.push(item)) e qual a importância do spread operator ([...carrinho, item]) no React?**
+
+O React decide se precisa re-renderizar um componente comparando o valor anterior do estado com o novo. Quando uso carrinho.push(item), altero o mesmo array que já estava na memória, então a referência continua igual. O React acha que nada mudou e a tela não é atualizada, além de poder causar bugs difíceis de achar.
+
+Com o spread operator, [...carrinho, item], crio um array novo com os itens antigos mais o novo. Como a referência é diferente, o React percebe a mudança e re-renderiza. Por isso o estado deve ser tratado como imutável: nunca alterar o original, sempre criar uma cópia e passá-la para a função atualizadora (setCarrinho). O mesmo vale para remover itens, onde uso filter, que também devolve um novo array.
